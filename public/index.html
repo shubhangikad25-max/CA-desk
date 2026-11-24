@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaxWise India - Smart Income Tax Calculator & Tax Planning (FY 2026-27)</title>
+    <meta name="description" content="Comprehensive Indian Income Tax Calculator & Tax Planning Engine for FY 2026-27. Supports Individual, HUF, Companies, Firms, LLPs, Cooperative Societies, Capital Gains, and Multi-Head Incomes.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <div class="brand-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="18" rx="3"></rect>
+                        <line x1="2" y1="9" x2="22" y2="9"></line>
+                        <line x1="8" y1="15" x2="8.01" y2="15"></line>
+                        <line x1="12" y1="15" x2="12.01" y2="15"></line>
+                        <line x1="16" y1="15" x2="16.01" y2="15"></line>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">TaxWise<span class="brand-badge">India</span></span>
+                    <span class="brand-subtitle">Smart Income Tax Calculator &amp; Tax-Saving Engine</span>
+                </div>
+            </div>
+
+            <div class="header-controls">
+                <div class="fy-selector-wrap">
+                    <label for="financialYear" class="fy-label">Tax Year / FY:</label>
+                    <select id="financialYear" class="fy-select" onchange="handleYearChange()">
+                        <option value="2026-2027" selected>FY 2026-27 (AY 2027-28) - Current</option>
+                        <option value="2025-2026">FY 2025-26 (AY 2026-27)</option>
+                        <option value="2024-2025">FY 2024-25 (AY 2025-26)</option>
+                        <option value="2023-2024">FY 2023-24 (AY 2024-25)</option>
+                    </select>
+                </div>
+                <button type="button" class="btn-preset-trigger" onclick="togglePresetsModal()" title="Load Sample Scenarios">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                    </svg>
+                    <span>Sample Profiles</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <main class="main-layout">
+        <!-- Left Column: Input Form Panel -->
+        <section class="calculator-panel">
+            <form id="taxForm" class="tax-form" onsubmit="event.preventDefault(); calculateTax();">
+                <!-- Year Highlights Banner -->
+                <div class="year-banner" id="yearBanner">
+                    <div class="year-banner-badge" id="yearBadgeText">Budget 2025 / 2026 Rules Active</div>
+                    <p class="year-banner-text" id="yearBannerText">
+                        Under New Regime, resident individuals pay <strong>₹0 tax up to ₹12 Lakh taxable income</strong> (₹12.75L with ₹75k standard deduction). STCG Sec 111A is 20%, and LTCG Sec 112A is 12.5% over ₹1.25L.
+                    </p>
+                </div>
+
+                <!-- Section 1: Type of Taxpayer / Assessee (Required Dropdown) -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <span class="section-num">1</span>
+                        <h2 class="section-title">Type of Taxpayer / Assessee</h2>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="taxpayerType">Select Assessee Category <span class="label-required">*</span></label>
+                        <select id="taxpayerType" class="highlight-select" onchange="handleTaxpayerTypeChange()">
+                            <option value="individual" selected>1. Individual (Natural Person)</option>
+                            <option value="huf">2. Hindu Undivided Family (HUF)</option>
+                            <option value="aop_boi_ajp">3. Association of Persons (AOP) / BOI / AJP</option>
+                            <option value="domestic_company">4. Company — Domestic (Indian Company)</option>
+                            <option value="foreign_company">5. Company — Foreign (Rate: 35%)</option>
+                            <option value="firm_llp">6. Firm / LLP (Flat 30% Tax)</option>
+                            <option value="cooperative_society">7. Cooperative Society (Slabs / Sec 115BAD)</option>
+                            <option value="local_authority">8. Local Authority (Flat 30% Tax)</option>
+                        </select>
+                        <span class="field-hint" id="taxpayerTypeHint">Progressive slabs, Section 87A rebate, and standard deduction apply to resident individuals.</span>
+                    </div>
+
+                    <!-- Individual Specific Demographics -->
+                    <div id="individualFieldsGroup">
+                        <div class="form-row">
+                            <div class="form-group flex-2">
+                                <label for="name">
+                                    Name <span class="label-optional">(Optional)</span>
+                                </label>
+                                <input type="text" id="name" placeholder="e.g. Rahul Sharma" autocomplete="name" maxlength="100">
+                            </div>
+
+                            <div class="form-group flex-1">
+                                <label for="age">
+                                    Age <span class="label-required">*</span>
+                                </label>
+                                <input type="number" id="age" value="30" min="1" max="120" oninput="handleAgeChange()">
+                                <span class="age-category-tag" id="ageCategoryTag">General (&lt;60 yrs)</span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="residentialStatus">Residential Status</label>
+                                <select id="residentialStatus" onchange="handleResidentialChange()">
+                                    <option value="resident" selected>Resident Individual (Eligible for Section 87A Rebate)</option>
+                                    <option value="non_resident">Non-Resident / NRI (Section 87A Rebate Ineligible)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Domestic Company Specific Options -->
+                    <div id="domesticCompanyFieldsGroup" style="display: none;">
+                        <div class="form-group">
+                            <label for="companyOption">Domestic Corporate Tax Option</label>
+                            <select id="companyOption" onchange="handleCompanyOptionChange()">
+                                <option value="standard_30" selected>Normal Corporate Tax Rate (30%)</option>
+                                <option value="turnover_le_400cr_25">Turnover &le; ₹400 Cr in base year (25%)</option>
+                                <option value="sec_115baa_22">Section 115BAA Concessional (22% + 10% Surcharge, No MAT)</option>
+                                <option value="sec_115bab_15">Section 115BAB New Manufacturing (15% + 10% Surcharge)</option>
+                            </select>
+                            <span class="field-hint">Section 115BAA offers effective 25.168% tax rate with no Minimum Alternate Tax (MAT).</span>
+                        </div>
+                    </div>
+
+                    <!-- Cooperative Society Specific Options -->
+                    <div id="cooperativeFieldsGroup" style="display: none;">
+                        <div class="form-group">
+                            <label for="cooperativeOption">Cooperative Society Tax Option</label>
+                            <select id="cooperativeOption" onchange="handleCooperativeOptionChange()">
+                                <option value="regular" selected>Regular Progressive Slabs (10%, 20%, 30%)</option>
+                                <option value="sec115bad">Section 115BAD Concessional (22% + 10% Surcharge, No AMT)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Income Sources (Multi-Head Income) -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <span class="section-num">2</span>
+                        <h2 class="section-title">Income Sources (Multi-Head)</h2>
+                    </div>
+
+                    <!-- Head A: Salary Income (Individual Only) -->
+                    <div class="income-head-card" id="salaryHeadGroup">
+                        <div class="income-head-header">
+                            <span class="head-title">A. Income from Salary</span>
+                            <span class="std-badge" id="stdDeductionBadge">Std Ded: ₹75,000 Auto-Applied</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="salaryIncome">Gross Annual Salary (₹)</label>
+                            <div class="currency-input-wrap">
+                                <span class="currency-symbol">₹</span>
+                                <input type="number" id="salaryIncome" placeholder="e.g. 1200000" min="0" step="1000" oninput="updateGrossIncomeDisplay()">
+                            </div>
+                            <span class="field-hint">Salary, allowances, and perquisites before standard deduction.</span>
+                        </div>
+                    </div>
+
+                    <!-- Head B: Business / Professional Income -->
+                    <div class="income-head-card" id="businessHeadGroup">
+                        <div class="income-head-header">
+                            <span class="head-title">B. Business &amp; Profession</span>
+                            <span class="head-tag">PGBP</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="businessIncome">Net Business / Professional Profit (₹)</label>
+                            <div class="currency-input-wrap">
+                                <span class="currency-symbol">₹</span>
+                                <input type="number" id="businessIncome" placeholder="0" min="0" step="1000" oninput="updateGrossIncomeDisplay()">
+                            </div>
+                            <span class="field-hint">Net taxable business profit after deducting allowable business expenses and depreciation.</span>
+                        </div>
+                    </div>
+
+                    <!-- Head C: House Property Income -->
+                    <div class="income-head-card" id="housePropertyHeadGroup">
+                        <div class="income-head-header">
+                            <span class="head-title">C. House Property</span>
+                            <span class="head-tag">Rental / Housing</span>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group flex-1">
+                                <label for="housePropertyType">Property Status</label>
+                                <select id="housePropertyType" onchange="handleHousePropertyTypeChange()">
+                                    <option value="self_occupied" selected>Self-Occupied (Home Loan Interest)</option>
+                                    <option value="let_out">Let-Out / Rented Property</option>
+                                </select>
+                            </div>
+                            <div class="form-group flex-1" id="homeLoanInterestGroup">
+                                <label for="sec24b">Home Loan Interest (₹)</label>
+                                <div class="currency-input-wrap">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="sec24b" placeholder="0" min="0" max="200000" step="1000" oninput="updateGrossIncomeDisplay()">
+                                </div>
+                                <span class="field-hint">Max ₹2,00,000 for self-occupied (Old Regime only).</span>
+                            </div>
+                        </div>
+
+                        <div id="letOutFieldsGroup" style="display: none;">
+                            <div class="form-row">
+                                <div class="form-group flex-1">
+                                    <label for="housePropertyGrossRent">Annual Gross Rent Received (₹)</label>
+                                    <div class="currency-input-wrap">
+                                        <span class="currency-symbol">₹</span>
+                                        <input type="number" id="housePropertyGrossRent" placeholder="0" min="0" step="1000" oninput="updateGrossIncomeDisplay()">
+                                    </div>
+                                </div>
+                                <div class="form-group flex-1">
+                                    <label for="housePropertyMunicipalTaxes">Municipal Taxes Paid (₹)</label>
+                                    <div class="currency-input-wrap">
+                                        <span class="currency-symbol">₹</span>
+                                        <input type="number" id="housePropertyMunicipalTaxes" placeholder="0" min="0" step="1000" oninput="updateGrossIncomeDisplay()">
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="field-hint">Standard statutory deduction of 30% under Section 24(a) is auto-calculated on Net Annual Value.</span>
+                        </div>
+                    </div>
+
+                    <!-- Head D: Capital Gains (Special Rates) -->
+                    <div class="income-head-card" id="capitalGainsHeadGroup">
+                        <div class="income-head-header">
+                            <span class="head-title">D. Capital Gains (Special Rates)</span>
+                            <span class="head-tag">Budget 2024 / 2025</span>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group flex-1">
+                                <div class="label-with-cap">
+                                    <label for="stcg111A">STCG Sec 111A (Equity)</label>
+                                    <span class="cap-tag badge-special">20% Tax</span>
+                                </div>
+                                <div class="currency-input-wrap">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="stcg111A" placeholder="0" min="0" step="1000" oninput="updateGrossIncomeDisplay()">
+                                </div>
+                                <span class="field-hint">Listed equity shares / equity funds subject to STT.</span>
+                            </div>
+                            <div class="form-group flex-1">
+                                <div class="label-with-cap">
+                                    <label for="stcgOther">Other STCG</label>
+                                    <span class="cap-tag">Slab Rate</span>
+                                </div>
+                                <div class="currency-input-wrap">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="stcgOther" placeholder="0" min="0" step="1000" oninput="updateGrossIncomeDisplay()">
+                                </div>
+                                <span class="field-hint">STCG on debt funds, gold, unlisted shares, real estate.</span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group flex-1">
+                                <div class="label-with-cap">
+                                    <label for="ltcg112A">LTCG Sec 112A (Equity)</label>
+                                    <span class="cap-tag badge-special">12.5% &gt; ₹1.25L</span>
+                                </div>
+                                <div class="currency-input-wrap">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="ltcg112A" placeholder="0" min="0" step="1000" oninput="updateGrossIncomeDisplay()">
+                                </div>
+                                <span class="field-hint">First ₹1,25,000 exempt; balance taxed at 12.5%.</span>
+                            </div>
+                            <div class="form-group flex-1">
+                                <div class="label-with-cap">
+                                    <label for="ltcg112">Other LTCG (Sec 112)</label>
+                                    <span class="cap-tag badge-special">12.5%</span>
+                                </div>
+                                <div class="currency-input-wrap">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="ltcg112" placeholder="0" min="0" step="1000" oninput="updateGrossIncomeDisplay()">
+                                </div>
+                                <span class="field-hint">LTCG on property, gold, unlisted assets (12.5% without indexation).</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Head E: Income from Other Sources -->
+                    <div class="income-head-card" id="otherSourcesHeadGroup">
+                        <div class="income-head-header">
+                            <span class="head-title">E. Other Sources</span>
+                            <span class="head-tag">Interest &amp; Dividends</span>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group flex-1">
+                                <label for="interestIncome">Bank &amp; Deposit Interest (₹)</label>
+                                <div class="currency-input-wrap">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="interestIncome" placeholder="0" min="0" step="1000" oninput="updateGrossIncomeDisplay()">
+                                </div>
+                            </div>
+                            <div class="form-group flex-1">
+                                <label for="dividendIncome">Dividend Receipts (₹)</label>
+                                <div class="currency-input-wrap">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="dividendIncome" placeholder="0" min="0" step="1000" oninput="updateGrossIncomeDisplay()">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="otherIncome">Other Miscellaneous Income (₹)</label>
+                            <div class="currency-input-wrap">
+                                <span class="currency-symbol">₹</span>
+                                <input type="number" id="otherIncome" placeholder="0" min="0" step="1000" oninput="updateGrossIncomeDisplay()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gross Total Income Indicator Bar -->
+                    <div class="gross-summary-bar">
+                        <span class="gross-label">Combined Gross Income:</span>
+                        <span class="gross-value" id="grossIncomeDisplay">₹0</span>
+                    </div>
+
+                    <!-- Hidden legacy inputs -->
+                    <input type="hidden" id="income" value="0">
+                    <input type="hidden" id="deduction" value="0">
+                </div>
+
+                <!-- Section 3: Deductions & Exemptions (Individual & HUF) -->
+                <div class="form-section" id="deductionsSection">
+                    <div class="section-header collapsable-header" onclick="toggleDeductionsAccordion()">
+                        <div class="header-left">
+                            <span class="section-num">3</span>
+                            <h2 class="section-title">Eligible Deductions (Chapter VI-A)</h2>
+                        </div>
+                        <span class="toggle-icon" id="deductionsToggleIcon">▼</span>
+                    </div>
+
+                    <div class="deductions-content" id="deductionsContent">
+                        <div class="deduction-notice">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            <span>Deductions below primarily reduce tax under the <strong>Old Regime</strong>. Only Section 80CCD(2) (Employer NPS) is permitted under the New Regime.</span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group flex-1">
+                                <div class="label-with-cap">
+                                    <label for="sec80C">Section 80C</label>
+                                    <span class="cap-tag">Max ₹1.5 Lakh</span>
+                                </div>
+                                <div class="currency-input-wrap">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="sec80C" placeholder="0" min="0" max="150000" step="1000">
+                                </div>
+                                <span class="field-hint">EPF, PPF, ELSS, Life Insurance, Tuition fee, NSC.</span>
+                            </div>
+
+                            <div class="form-group flex-1">
+                                <div class="label-with-cap">
+                                    <label for="sec80CCD1B">Section 80CCD(1B) (NPS)</label>
+                                    <span class="cap-tag">Max ₹50,000</span>
+                                </div>
+                                <div class="currency-input-wrap">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="sec80CCD1B" placeholder="0" min="0" max="50000" step="1000">
+                                </div>
+                                <span class="field-hint">Self-contribution to National Pension System.</span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group flex-1">
+                                <div class="label-with-cap">
+                                    <label for="sec80D">Section 80D (Health Insurance)</label>
+                                    <span class="cap-tag">Up to ₹1 Lakh</span>
+                                </div>
+                                <div class="currency-input-wrap">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="sec80D" placeholder="0" min="0" max="100000" step="1000">
+                                </div>
+                                <span class="field-hint">Health insurance premium (Self, Family &amp; Parents).</span>
+                            </div>
+
+                            <div class="form-group flex-1">
+                                <div class="label-with-cap">
+                                    <label for="sec80CCD2">Section 80CCD(2) (Employer NPS)</label>
+                                    <span class="cap-tag badge-both">Both Regimes</span>
+                                </div>
+                                <div class="currency-input-wrap">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="sec80CCD2" placeholder="0" min="0" step="1000">
+                                </div>
+                                <span class="field-hint">Employer contribution to employee NPS (Up to 14% of Basic).</span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group flex-1">
+                                <div class="label-with-cap">
+                                    <label for="sec80E">Section 80E (Education Loan)</label>
+                                    <span class="cap-tag">No Upper Cap</span>
+                                </div>
+                                <div class="currency-input-wrap">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="sec80E" placeholder="0" min="0" step="1000">
+                                </div>
+                                <span class="field-hint">Interest on loan for higher education of self/children.</span>
+                            </div>
+
+                            <div class="form-group flex-1">
+                                <div class="label-with-cap">
+                                    <label for="otherDeductions">Other Deductions</label>
+                                    <span class="cap-tag">Old Regime</span>
+                                </div>
+                                <div class="currency-input-wrap">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="otherDeductions" placeholder="0" min="0" step="1000">
+                                </div>
+                                <span class="field-hint">Section 80G, 80TTA/80TTB interest deductions, etc.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Regime Selection -->
+                <div class="form-section" id="regimeSelectionSection">
+                    <div class="section-header">
+                        <span class="section-num">4</span>
+                        <h2 class="section-title">Tax Regime Selection</h2>
+                    </div>
+
+                    <div class="regime-selector-group">
+                        <label class="regime-radio-card active" id="regimeCardCompare">
+                            <input type="radio" name="regimeChoice" value="compare" checked onchange="handleRegimeChoiceChange('compare')">
+                            <div class="radio-card-content">
+                                <div class="radio-card-title">
+                                    <span>Compare Both Regimes</span>
+                                    <span class="badge-recommended">Recommended</span>
+                                </div>
+                                <p class="radio-card-desc">Evaluates both New &amp; Old Regimes side-by-side to identify the lower estimated tax.</p>
+                            </div>
+                        </label>
+
+                        <label class="regime-radio-card" id="regimeCardNew">
+                            <input type="radio" name="regimeChoice" value="new" onchange="handleRegimeChoiceChange('new')">
+                            <div class="radio-card-content">
+                                <div class="radio-card-title">
+                                    <span>New Tax Regime</span>
+                                    <span class="badge-default">Default (Sec 115BAC)</span>
+                                </div>
+                                <p class="radio-card-desc">Concessional slabs, higher rebate (up to ₹12L in FY 26-27), no investment lock-in required.</p>
+                            </div>
+                        </label>
+
+                        <label class="regime-radio-card" id="regimeCardOld">
+                            <input type="radio" name="regimeChoice" value="old" onchange="handleRegimeChoiceChange('old')">
+                            <div class="radio-card-content">
+                                <div class="radio-card-title">
+                                    <span>Old Tax Regime</span>
+                                    <span class="badge-opt">With Deductions</span>
+                                </div>
+                                <p class="radio-card-desc">Higher slab rates, but permits 80C, 80D, HRA, home loan interest, and other deductions.</p>
+                            </div>
+                        </label>
+                    </div>
+
+                    <select id="regime" style="display: none;">
+                        <option value="compare" selected>Compare Both</option>
+                        <option value="new">New Regime</option>
+                        <option value="old">Old Regime</option>
+                    </select>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="calculateBtn">
+                        <span class="btn-spinner" id="btnSpinner" style="display: none;"></span>
+                        <svg class="btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <line x1="8" y1="10" x2="16" y2="10"></line>
+                            <line x1="12" y1="6" x2="12" y2="14"></line>
+                        </svg>
+                        <span>Calculate Tax</span>
+                    </button>
+
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                        <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                            <path d="M3 3v5h5"></path>
+                        </svg>
+                        <span>Reset</span>
+                    </button>
+                </div>
+
+                <!-- Validation Alerts Box -->
+                <div class="alert-box alert-error" id="formErrorAlert" style="display: none;">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-message" id="formErrorMessage"></div>
+                </div>
+            </form>
+        </section>
+
+        <!-- Right Column: Results & Analytics Dashboard -->
+        <section class="results-panel" id="resultBox">
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState">
+                <div class="empty-hero-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                </div>
+                <h2 class="empty-title">Ready for Multi-Head Tax Calculation</h2>
+                <p class="empty-desc">
+                    Select your taxpayer type, enter your income across Salary, Business, House Property, and Capital Gains, and click <strong>Calculate Tax</strong> to generate the comprehensive tax report, regime comparison, and tailored tax-saving strategies.
+                </p>
+
+                <div class="highlights-grid">
+                    <div class="highlight-card">
+                        <span class="highlight-tag">FY 2026-27 Slabs</span>
+                        <div class="highlight-value">₹0 Tax up to ₹12.75L</div>
+                        <p class="highlight-text">For resident salaried individuals under New Regime (₹12L income + ₹75,000 standard deduction).</p>
+                    </div>
+                    <div class="highlight-card">
+                        <span class="highlight-tag">Multi-Taxpayer Support</span>
+                        <div class="highlight-value">8 Assessee Categories</div>
+                        <p class="highlight-text">Accurate rates for Individuals, HUFs, Domestic &amp; Foreign Companies, Firms, LLPs, and Cooperatives.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <span class="highlight-tag">Interactive Simulator</span>
+                        <div class="highlight-value">Tax Planning Engine</div>
+                        <p class="highlight-text">Live tax-saving recommendations and proposed investment simulator using the authoritative calculation engine.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Calculation Results (Hidden initially) -->
+            <div class="active-results" id="activeResults" style="display: none;">
+                <!-- Header & Actions -->
+                <div class="results-top-bar">
+                    <div class="results-title-group">
+                        <h2 class="results-heading" id="welcome">Tax Calculation Statement</h2>
+                        <span class="results-timestamp" id="calcTimestamp">Calculated on: --</span>
+                    </div>
+                    <div class="report-actions">
+                        <button type="button" class="btn-action" onclick="printTaxReport()" title="Print / Save as PDF">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                                <rect x="6" y="14" width="12" height="8"></rect>
+                            </svg>
+                            <span>Print Report</span>
+                        </button>
+                        <button type="button" class="btn-action" onclick="downloadTaxReport()" title="Download Statement">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            <span>Download Statement</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recommendation Hero Card -->
+                <div class="recommendation-hero" id="recommendationHero">
+                    <div class="rec-icon" id="recIcon">✓</div>
+                    <div class="rec-content">
+                        <div class="rec-badge" id="recBadge">LOWER ESTIMATED TAX</div>
+                        <h3 class="rec-title" id="recTitle">New Tax Regime is beneficial</h3>
+                        <p class="rec-explanation" id="recExplanation">
+                            The New Tax Regime produces a lower estimated tax by ₹0.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 7 Summary Metric Cards -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <span class="metric-label">Combined Gross Income</span>
+                        <div class="metric-value" id="showIncome">₹0</div>
+                        <span class="metric-subtext">Across all income heads</span>
+                    </div>
+
+                    <div class="metric-card">
+                        <span class="metric-label">Total Eligible Deductions</span>
+                        <div class="metric-value metric-savings" id="showDeduction">₹0</div>
+                        <span class="metric-subtext" id="deductionSubtext">Eligible under active regime</span>
+                    </div>
+
+                    <div class="metric-card">
+                        <span class="metric-label">Taxable Income</span>
+                        <div class="metric-value" id="showTaxable">₹0</div>
+                        <span class="metric-subtext">Rounded per Section 288A</span>
+                    </div>
+
+                    <div class="metric-card metric-card-tax">
+                        <span class="metric-label">Total Estimated Tax</span>
+                        <div class="metric-value metric-tax-amount" id="totalTax">₹0</div>
+                        <span class="metric-subtext" id="totalTaxSubtext">Includes cess &amp; marginal relief</span>
+                    </div>
+
+                    <div class="metric-card">
+                        <span class="metric-label">Monthly Tax Equivalent</span>
+                        <div class="metric-value" id="monthlyTax">₹0</div>
+                        <span class="metric-subtext">Annual tax divided by 12</span>
+                    </div>
+
+                    <div class="metric-card">
+                        <span class="metric-label">Effective Tax Rate</span>
+                        <div class="metric-value" id="effectiveTaxRate">0.00%</div>
+                        <span class="metric-subtext">Tax as % of Gross Income</span>
+                    </div>
+
+                    <div class="metric-card metric-card-posttax">
+                        <div class="metric-label-with-tip">
+                            <span class="metric-label">Est. Post-Tax Income</span>
+                            <span class="info-tip" title="Gross income minus estimated income tax. Does not account for employee provident fund, professional tax, or other employer payroll deductions.">ℹ</span>
+                        </div>
+                        <div class="metric-value" id="postTaxIncome">₹0</div>
+                        <span class="metric-subtext">Estimated annual post-tax income</span>
+                    </div>
+                </div>
+
+                <!-- Multi-Head Income Breakdown Table -->
+                <div class="dashboard-card" id="headWiseCard">
+                    <div class="card-header">
+                        <h3 class="card-title">Income Breakdown by Head</h3>
+                        <span class="card-tag">5 Heads of Income</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Income Head</th>
+                                    <th>Gross Amount (₹)</th>
+                                    <th>Adjustments / Deductions</th>
+                                    <th>Net Taxable Amount (₹)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="headWiseTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Side-by-Side Regime Comparison Section -->
+                <div class="dashboard-card" id="comparisonCard">
+                    <div class="card-header">
+                        <h3 class="card-title">Regime Direct Comparison</h3>
+                        <span class="card-tag">Side-by-Side Analysis</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th id="compColNew">New Tax Regime</th>
+                                    <th id="compColOld">Old Tax Regime</th>
+                                    <th>Difference / Impact</th>
+                                </tr>
+                            </thead>
+                            <tbody id="comparisonTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Visual Charts Section -->
+                <div class="charts-row">
+                    <!-- Chart 1: Income Allocation -->
+                    <div class="dashboard-card chart-card flex-1">
+                        <div class="card-header">
+                            <h3 class="card-title">Income Allocation</h3>
+                            <span class="card-tag">Distribution</span>
+                        </div>
+                        <div class="chart-container" id="incomeAllocationChart"></div>
+                        <div class="chart-legend" id="incomeLegend"></div>
+                    </div>
+
+                    <!-- Chart 2: Regime Comparison Bars -->
+                    <div class="dashboard-card chart-card flex-1">
+                        <div class="card-header">
+                            <h3 class="card-title">Regime Tax Comparison</h3>
+                            <span class="card-tag">Comparison</span>
+                        </div>
+                        <div class="chart-container" id="regimeComparisonChart"></div>
+                        <div class="chart-legend" id="regimeLegend"></div>
+                    </div>
+                </div>
+
+                <!-- Chart 3: Progressive Tax Slab Breakdown -->
+                <div class="dashboard-card chart-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Progressive Slab Breakdown</h3>
+                        <span class="card-tag" id="slabChartTag">Active Slabs</span>
+                    </div>
+                    <div class="chart-container chart-horizontal" id="slabBreakdownChart"></div>
+                </div>
+
+                <!-- Detailed Tax Calculation Table -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Progressive Slab &amp; Special Tax Computation</h3>
+                        <span class="card-tag" id="detailedBreakdownTag">Itemized Breakdown</span>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="breakdown-table">
+                            <thead>
+                                <tr>
+                                    <th>Bracket / Component</th>
+                                    <th>Rate</th>
+                                    <th>Taxable Slice (₹)</th>
+                                    <th>Tax for Slice (₹)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="slabBreakdownTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" class="table-summary-label">Tax before Rebate:</td>
+                                    <td class="table-summary-val" id="showTax">₹0</td>
+                                </tr>
+                                <tr id="rebateRow">
+                                    <td colspan="3" class="table-summary-label">
+                                        Less: Section 87A Tax Rebate
+                                        <span class="badge-rebate" id="rebateBadge" style="display: none;">Marginal Relief</span>
+                                    </td>
+                                    <td class="table-summary-val text-green" id="showRebate">-₹0</td>
+                                </tr>
+                                <tr id="surchargeRow">
+                                    <td colspan="3" class="table-summary-label">
+                                        Add: Surcharge
+                                        <span class="badge-surcharge" id="surchargeBadge" style="display: none;">0%</span>
+                                    </td>
+                                    <td class="table-summary-val" id="showSurcharge">₹0</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="table-summary-label">Add: Health &amp; Education Cess (4%):</td>
+                                    <td class="table-summary-val" id="showCess">₹0</td>
+                                </tr>
+                                <tr class="table-final-row">
+                                    <td colspan="3" class="table-summary-label">Total Estimated Tax Liability (Rounded per Sec 288B):</td>
+                                    <td class="table-summary-val text-bold-purple" id="tableTotalTax">₹0</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- DEDICATED FEATURE: Tax Planning & Tax-Saving Recommendations -->
+                <div class="dashboard-card tax-planning-card" id="taxPlanningSection">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">💡 Tax Planning &amp; Tax-Saving Recommendations</h3>
+                            <p class="planning-subtitle" id="planningCategorySubtitle">Tailored strategies for the selected taxpayer category</p>
+                        </div>
+                        <span class="card-tag badge-planning">Personalized Insights</span>
+                    </div>
+
+                    <!-- Interactive Tax-Saving Simulator Widget -->
+                    <div class="simulator-box">
+                        <div class="simulator-header">
+                            <span class="simulator-icon">⚡</span>
+                            <div>
+                                <h4 class="simulator-title">Interactive Tax-Saving Simulator</h4>
+                                <p class="simulator-desc">Test how an additional eligible investment or payment impacts your actual tax liability in real time.</p>
+                            </div>
+                        </div>
+
+                        <div class="simulator-controls">
+                            <div class="sim-group flex-2">
+                                <label for="simSectionSelect">Tax-Saving Section / Instrument</label>
+                                <select id="simSectionSelect">
+                                    <option value="sec80C">Section 80C (PPF, ELSS, EPF, Life Insurance - Max ₹1.5L)</option>
+                                    <option value="sec80CCD1B">Section 80CCD(1B) (NPS Self Contribution - Max ₹50,000)</option>
+                                    <option value="sec80CCD2">Section 80CCD(2) (Employer NPS - Both Regimes)</option>
+                                    <option value="sec80D">Section 80D (Health Insurance Premium)</option>
+                                    <option value="sec24b">Section 24(b) (Home Loan Interest - Max ₹2L)</option>
+                                    <option value="otherDeductions">Other Deductions (80E, 80G, 80TTA)</option>
+                                </select>
+                            </div>
+
+                            <div class="sim-group flex-1">
+                                <label for="simAmountInput">Proposed Investment (₹)</label>
+                                <div class="currency-input-wrap">
+                                    <span class="currency-symbol">₹</span>
+                                    <input type="number" id="simAmountInput" placeholder="e.g. 50000" min="0" step="5000">
+                                </div>
+                            </div>
+
+                            <div class="sim-group-btn">
+                                <button type="button" class="btn btn-simulate" onclick="runTaxSimulation()">
+                                    <span>Simulate Savings</span>
+                                </button>
+                                <button type="button" class="btn btn-sim-reset" onclick="resetTaxSimulation()" title="Reset Simulator">
+                                    <span>Reset</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Simulator Live Results Bar -->
+                        <div class="sim-results-bar" id="simResultsBar" style="display: none;">
+                            <div class="sim-metrics-grid">
+                                <div class="sim-metric">
+                                    <span class="sim-label">Proposed Outflow</span>
+                                    <span class="sim-value" id="simProposedAmt">₹0</span>
+                                </div>
+                                <div class="sim-metric">
+                                    <span class="sim-label">Allowed Deduction</span>
+                                    <span class="sim-value text-green" id="simAllowedAmt">₹0</span>
+                                </div>
+                                <div class="sim-metric">
+                                    <span class="sim-label">Revised Taxable</span>
+                                    <span class="sim-value" id="simRevisedTaxable">₹0</span>
+                                </div>
+                                <div class="sim-metric">
+                                    <span class="sim-label">Revised Tax</span>
+                                    <span class="sim-value" id="simRevisedTax">₹0</span>
+                                </div>
+                                <div class="sim-metric sim-highlight">
+                                    <span class="sim-label">Estimated Tax Saved</span>
+                                    <span class="sim-value text-green" id="simTaxSaved">₹0</span>
+                                </div>
+                                <div class="sim-metric">
+                                    <span class="sim-label">Net Cash Outflow</span>
+                                    <span class="sim-value" id="simNetOutflow">₹0</span>
+                                </div>
+                                <div class="sim-metric">
+                                    <span class="sim-label">Tax Saved / Outflow</span>
+                                    <span class="sim-value text-bold-purple" id="simEfficiency">0%</span>
+                                </div>
+                            </div>
+                            <div class="sim-explanation-box" id="simExplanationBox">
+                                <span class="sim-exp-icon">ℹ</span>
+                                <p class="sim-exp-text" id="simExplanationText"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expandable Taxpayer Recommendation Cards Grid -->
+                    <div class="recommendations-grid" id="recommendationsGrid">
+                        <!-- Populated dynamically by script.js -->
+                    </div>
+                </div>
+
+                <!-- Assumptions and Notes -->
+                <div class="dashboard-card assumptions-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Calculation Assumptions &amp; Provisions</h3>
+                    </div>
+                    <ul class="assumptions-list" id="assumptionsList"></ul>
+                </div>
+
+                <!-- Statutory Legal Disclaimer -->
+                <div class="disclaimer-box">
+                    <div class="disclaimer-icon">⚖️</div>
+                    <p class="disclaimer-text">
+                        <strong>Statutory Disclaimer:</strong> This income tax calculator and planning engine is designed strictly for informational, educational, and personal planning purposes based on the Indian Income-tax Act, 1961 as amended for the selected Financial Year. It provides an estimate of income tax liability and does not constitute formal tax, legal, accounting, or personalized investment advice. Users should consult a certified Chartered Accountant (CA) or tax professional before making financial investments or filing official returns.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Sample Scenarios Modal -->
+    <div class="modal-backdrop" id="presetsModal" style="display: none;" onclick="handleModalBackdropClick(event)">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3 class="modal-title">Load Sample Taxpayer Profiles</h3>
+                <button type="button" class="btn-close" onclick="togglePresetsModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">Select a preset to test various taxpayer categories, income thresholds, capital gains, and corporate rates:</p>
+                <div class="presets-list">
+                    <button type="button" class="preset-item" onclick="loadPreset('salaried12L')">
+                        <div class="preset-title">Individual: Salaried Professional - ₹12.75 Lakh (FY 26-27 Zero Tax)</div>
+                        <div class="preset-desc">₹12.75L salary - ₹75k standard deduction = ₹12L taxable. 100% tax rebated under Sec 87A (₹0 Tax).</div>
+                    </button>
+                    <button type="button" class="preset-item" onclick="loadPreset('salariedMarginal')">
+                        <div class="preset-title">Individual: Section 87A Marginal Relief - ₹12.85 Lakh</div>
+                        <div class="preset-desc">Taxable income ₹12.10 Lakh (₹10,000 above threshold). Demonstrates Section 87A marginal relief capping tax.</div>
+                    </button>
+                    <button type="button" class="preset-item" onclick="loadPreset('individualInvestments')">
+                        <div class="preset-title">Individual: Salaried with Eligible Investments - ₹16 Lakh</div>
+                        <div class="preset-desc">₹16L Salary + ₹1.5L 80C + ₹50k NPS 80CCD(1B) + ₹50k 80D + ₹2L Home loan interest. Compares Old vs New regime benefit.</div>
+                    </button>
+                    <button type="button" class="preset-item" onclick="loadPreset('capitalGainsEarner')">
+                        <div class="preset-title">Individual: Multi-Head Salary &amp; Capital Gains (Sec 111A + 112A)</div>
+                        <div class="preset-desc">₹15L Salary + ₹2L STCG (20%) + ₹3L LTCG 112A (12.5% &gt; ₹1.25L). Tests separate special rate calculations.</div>
+                    </button>
+                    <button type="button" class="preset-item" onclick="loadPreset('hufBusiness')">
+                        <div class="preset-title">HUF: Business &amp; Rental Earner - ₹10 Lakh</div>
+                        <div class="preset-desc">HUF assessed under Old vs New regime without personal salary or Section 87A rebate.</div>
+                    </button>
+                    <button type="button" class="preset-item" onclick="loadPreset('domesticCompany')">
+                        <div class="preset-title">Domestic Company: Section 115BAA (22% Concessional Rate)</div>
+                        <div class="preset-desc">Business income ₹1 Crore taxed at 22% + 10% flat surcharge = effective 25.168% rate with no MAT.</div>
+                    </button>
+                    <button type="button" class="preset-item" onclick="loadPreset('firmLLP')">
+                        <div class="preset-title">Firm / LLP: Flat 30% Tax &amp; Surcharge</div>
+                        <div class="preset-desc">Partnership firm with ₹1.5 Crore income. Tests flat 30% rate and 12% surcharge with marginal relief.</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Printable Report Container -->
+    <div id="printReportContainer" class="print-only"></div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <p>TaxWise &copy; Indian Income Tax Calculation &amp; Planning Engine.</p>
+            <p class="footer-sub">Updated for Tax Year / FY 2026-27 (AY 2027-28), Union Budget 2025, and Finance (No. 2) Act 2024.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

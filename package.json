@@ -1,0 +1,29 @@
+{
+  "name": "form-aiml",
+  "version": "1.0.0",
+  "description": "CA Desk Enterprise Office Management Platform with Integrated TaxWise Engine",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:all": "node run-all.js",
+    "start:cadesk": "npm --prefix ca-desk start",
+    "test": "node --test tests/**/*.test.js",
+    "test:cadesk": "npm --prefix ca-desk test",
+    "test:all": "node --test tests/**/*.test.js && npm --prefix ca-desk test",
+    "install:all": "npm install && npm --prefix ca-desk install"
+  },
+  "keywords": [
+    "income-tax",
+    "taxwise",
+    "ca-desk",
+    "chartered-accountant",
+    "tax-calculator"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongodb": "^7.7.0"
+  }
+}

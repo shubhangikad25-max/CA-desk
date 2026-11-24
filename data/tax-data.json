@@ -1,0 +1,848 @@
+{
+  "defaultYear": "2026-2027",
+  "supportedYears": [
+    {
+      "id": "2026-2027",
+      "financialYear": "FY 2026-27",
+      "assessmentYear": "AY 2027-28",
+      "label": "FY 2026-27 (AY 2027-28) - Current / Enacted",
+      "status": "active",
+      "notes": "Budget 2025 revised slabs under Section 115BAC; Rs 12L rebate limit for resident individuals with marginal relief; Rs 75,000 standard deduction for salaried; revised STCG 20% & LTCG 12.5% with Rs 1.25L exemption; foreign company rate 35%."
+    },
+    {
+      "id": "2025-2026",
+      "financialYear": "FY 2025-26",
+      "assessmentYear": "AY 2026-27",
+      "label": "FY 2025-26 (AY 2026-27)",
+      "status": "active",
+      "notes": "Budget 2025 revised slabs under Section 115BAC; Rs 12L rebate limit for resident individuals with marginal relief; Rs 75,000 standard deduction for salaried."
+    },
+    {
+      "id": "2024-2025",
+      "financialYear": "FY 2024-25",
+      "assessmentYear": "AY 2025-26",
+      "label": "FY 2024-25 (AY 2025-26)",
+      "status": "active",
+      "notes": "Finance (No. 2) Act 2024 revised slabs under Section 115BAC; Rs 7L rebate limit with marginal relief; Rs 75,000 standard deduction for salaried."
+    },
+    {
+      "id": "2023-2024",
+      "financialYear": "FY 2023-24",
+      "assessmentYear": "AY 2024-25",
+      "label": "FY 2023-24 (AY 2024-25)",
+      "status": "active",
+      "notes": "Budget 2023 revised default New Tax Regime; Rs 7L rebate limit with marginal relief; Rs 50,000 standard deduction for salaried."
+    }
+  ],
+  "taxpayerTypes": [
+    {
+      "id": "individual",
+      "label": "Individual",
+      "description": "Natural person (Resident, Senior Citizen, or Non-Resident)",
+      "supportsRegimes": true,
+      "supportsAge": true,
+      "supportsResidentialStatus": true,
+      "allowedIncomeHeads": ["salary", "business", "capital_gains", "house_property", "other_sources"]
+    },
+    {
+      "id": "huf",
+      "label": "Hindu Undivided Family (HUF)",
+      "description": "Hindu Undivided Family assessed as a separate tax entity",
+      "supportsRegimes": true,
+      "supportsAge": false,
+      "supportsResidentialStatus": true,
+      "allowedIncomeHeads": ["business", "capital_gains", "house_property", "other_sources"]
+    },
+    {
+      "id": "aop_boi_ajp",
+      "label": "AOP / BOI / Artificial Juridical Person (AJP)",
+      "description": "Association of Persons, Body of Individuals, or Artificial Juridical Person",
+      "supportsRegimes": true,
+      "supportsAge": false,
+      "supportsResidentialStatus": false,
+      "allowedIncomeHeads": ["business", "capital_gains", "house_property", "other_sources"]
+    },
+    {
+      "id": "domestic_company",
+      "label": "Company — Domestic",
+      "description": "Indian company or company with place of effective management in India",
+      "supportsRegimes": false,
+      "supportsCompanyOptions": true,
+      "supportsAge": false,
+      "supportsResidentialStatus": false,
+      "allowedIncomeHeads": ["business", "capital_gains", "house_property", "other_sources"]
+    },
+    {
+      "id": "foreign_company",
+      "label": "Company — Foreign",
+      "description": "Company incorporated outside India without Indian residential status (Tax rate 35%)",
+      "supportsRegimes": false,
+      "supportsCompanyOptions": false,
+      "supportsAge": false,
+      "supportsResidentialStatus": false,
+      "allowedIncomeHeads": ["business", "capital_gains", "house_property", "other_sources"]
+    },
+    {
+      "id": "firm_llp",
+      "label": "Firm / LLP",
+      "description": "Partnership Firm or Limited Liability Partnership (Flat 30% tax rate)",
+      "supportsRegimes": false,
+      "supportsAge": false,
+      "supportsResidentialStatus": false,
+      "allowedIncomeHeads": ["business", "capital_gains", "house_property", "other_sources"]
+    },
+    {
+      "id": "cooperative_society",
+      "label": "Cooperative Society",
+      "description": "Registered cooperative society (Progressive slabs or Section 115BAD @ 22%)",
+      "supportsRegimes": true,
+      "cooperativeRegimeLabel": "Regular Slabs vs Section 115BAD (22%)",
+      "supportsAge": false,
+      "supportsResidentialStatus": false,
+      "allowedIncomeHeads": ["business", "capital_gains", "house_property", "other_sources"]
+    },
+    {
+      "id": "local_authority",
+      "label": "Local Authority",
+      "description": "Municipal corporation, district board, etc. (Flat 30% tax rate)",
+      "supportsRegimes": false,
+      "supportsAge": false,
+      "supportsResidentialStatus": false,
+      "allowedIncomeHeads": ["business", "capital_gains", "house_property", "other_sources"]
+    }
+  ],
+  "years": {
+    "2026-2027": {
+      "financialYear": "2026-2027",
+      "assessmentYear": "2027-2028",
+      "cess": 0.04,
+      "individual": {
+        "newRegime": {
+          "standardDeduction": 75000,
+          "rebate87A": {
+            "applicableToResidentsOnly": true,
+            "incomeThreshold": 1200000,
+            "maxRebate": 60000,
+            "hasMarginalRelief": true,
+            "excludesSection112A": true
+          },
+          "slabs": [
+            { "min": 0, "max": 400000, "rate": 0, "label": "Up to ₹4,00,000" },
+            { "min": 400000, "max": 800000, "rate": 0.05, "label": "₹4,00,001 to ₹8,00,000" },
+            { "min": 800000, "max": 1200000, "rate": 0.10, "label": "₹8,00,001 to ₹12,00,000" },
+            { "min": 1200000, "max": 1600000, "rate": 0.15, "label": "₹12,00,001 to ₹16,00,000" },
+            { "min": 1600000, "max": 2000000, "rate": 0.20, "label": "₹16,00,001 to ₹20,00,000" },
+            { "min": 2000000, "max": 2400000, "rate": 0.25, "label": "₹20,00,001 to ₹24,00,000" },
+            { "min": 2400000, "max": null, "rate": 0.30, "label": "Above ₹24,00,000" }
+          ],
+          "surcharge": [
+            { "min": 5000000, "max": 10000000, "rate": 0.10 },
+            { "min": 10000000, "max": 20000000, "rate": 0.15 },
+            { "min": 20000000, "max": null, "rate": 0.25 }
+          ]
+        },
+        "oldRegime": {
+          "standardDeduction": 50000,
+          "rebate87A": {
+            "applicableToResidentsOnly": true,
+            "incomeThreshold": 500000,
+            "maxRebate": 12500,
+            "hasMarginalRelief": false,
+            "excludesSection112A": true
+          },
+          "slabs": {
+            "general": [
+              { "min": 0, "max": 250000, "rate": 0, "label": "Up to ₹2,50,000" },
+              { "min": 250000, "max": 500000, "rate": 0.05, "label": "₹2,50,001 to ₹5,00,000" },
+              { "min": 500000, "max": 1000000, "rate": 0.20, "label": "₹5,00,001 to ₹10,00,000" },
+              { "min": 1000000, "max": null, "rate": 0.30, "label": "Above ₹10,00,000" }
+            ],
+            "seniorCitizen": [
+              { "min": 0, "max": 300000, "rate": 0, "label": "Up to ₹3,00,000" },
+              { "min": 300000, "max": 500000, "rate": 0.05, "label": "₹3,00,001 to ₹5,00,000" },
+              { "min": 500000, "max": 1000000, "rate": 0.20, "label": "₹5,00,001 to ₹10,00,000" },
+              { "min": 1000000, "max": null, "rate": 0.30, "label": "Above ₹10,00,000" }
+            ],
+            "superSeniorCitizen": [
+              { "min": 0, "max": 500000, "rate": 0, "label": "Up to ₹5,00,000" },
+              { "min": 500000, "max": 1000000, "rate": 0.20, "label": "₹5,00,001 to ₹10,00,000" },
+              { "min": 1000000, "max": null, "rate": 0.30, "label": "Above ₹10,00,000" }
+            ]
+          },
+          "surcharge": [
+            { "min": 5000000, "max": 10000000, "rate": 0.10 },
+            { "min": 10000000, "max": 20000000, "rate": 0.15 },
+            { "min": 20000000, "max": 50000000, "rate": 0.25 },
+            { "min": 50000000, "max": null, "rate": 0.37 }
+          ]
+        }
+      },
+      "capitalGains": {
+        "stcg111A": {
+          "rate": 0.20,
+          "label": "STCG on Listed Equity/Equity Funds (Sec 111A) - 20%",
+          "surchargeCap": 0.15,
+          "rebateEligible": false,
+          "adjustAgainstBasicExemption": true
+        },
+        "ltcg112A": {
+          "rate": 0.125,
+          "exemptionLimit": 125000,
+          "label": "LTCG on Listed Equity/Equity Funds (Sec 112A) - 12.5% over ₹1.25 Lakh",
+          "surchargeCap": 0.15,
+          "rebateEligible": false,
+          "adjustAgainstBasicExemption": true
+        },
+        "ltcg112": {
+          "rate": 0.125,
+          "label": "Other LTCG (Sec 112) - 12.5% without indexation",
+          "surchargeCap": 0.15,
+          "rebateEligible": true,
+          "adjustAgainstBasicExemption": true
+        }
+      },
+      "entities": {
+        "domesticCompany": {
+          "options": [
+            { "id": "standard_30", "rate": 0.30, "label": "Normal Corporate Rate (30%)" },
+            { "id": "turnover_le_400cr_25", "rate": 0.25, "label": "Turnover <= ₹400 Cr in base year (25%)" },
+            { "id": "sec_115baa_22", "rate": 0.22, "surchargeFlat": 0.10, "label": "Section 115BAA Concessional (22% + 10% Surcharge)" },
+            { "id": "sec_115bab_15", "rate": 0.15, "surchargeFlat": 0.10, "label": "Section 115BAB New Manufacturing (15% + 10% Surcharge)" }
+          ],
+          "surcharge": [
+            { "min": 10000000, "max": 100000000, "rate": 0.07 },
+            { "min": 100000000, "max": null, "rate": 0.12 }
+          ]
+        },
+        "foreignCompany": {
+          "rate": 0.35,
+          "label": "Foreign Company Tax Rate (35% under Finance (No. 2) Act 2024)",
+          "surcharge": [
+            { "min": 10000000, "max": 100000000, "rate": 0.02 },
+            { "min": 100000000, "max": null, "rate": 0.05 }
+          ]
+        },
+        "firmLLP": {
+          "rate": 0.30,
+          "label": "Partnership Firm / LLP (Flat 30%)",
+          "surcharge": [
+            { "min": 10000000, "max": null, "rate": 0.12 }
+          ]
+        },
+        "cooperativeSociety": {
+          "regularSlabs": [
+            { "min": 0, "max": 10000, "rate": 0.10, "label": "Up to ₹10,000 (10%)" },
+            { "min": 10000, "max": 20000, "rate": 0.20, "label": "₹10,001 to ₹20,000 (20%)" },
+            { "min": 20000, "max": null, "rate": 0.30, "label": "Above ₹20,000 (30%)" }
+          ],
+          "concessional": {
+            "sec115bad": { "rate": 0.22, "surchargeFlat": 0.10, "label": "Section 115BAD Concessional (22% + 10% Surcharge)" },
+            "sec115bae": { "rate": 0.15, "surchargeFlat": 0.10, "label": "Section 115BAE New Manufacturing (15% + 10% Surcharge)" }
+          },
+          "surcharge": [
+            { "min": 10000000, "max": 100000000, "rate": 0.07 },
+            { "min": 100000000, "max": null, "rate": 0.12 }
+          ]
+        },
+        "localAuthority": {
+          "rate": 0.30,
+          "label": "Local Authority (Flat 30%)",
+          "surcharge": [
+            { "min": 10000000, "max": null, "rate": 0.12 }
+          ]
+        }
+      }
+    },
+    "2025-2026": {
+      "financialYear": "2025-2026",
+      "assessmentYear": "2026-2027",
+      "cess": 0.04,
+      "individual": {
+        "newRegime": {
+          "standardDeduction": 75000,
+          "rebate87A": {
+            "applicableToResidentsOnly": true,
+            "incomeThreshold": 1200000,
+            "maxRebate": 60000,
+            "hasMarginalRelief": true,
+            "excludesSection112A": true
+          },
+          "slabs": [
+            { "min": 0, "max": 400000, "rate": 0, "label": "Up to ₹4,00,000" },
+            { "min": 400000, "max": 800000, "rate": 0.05, "label": "₹4,00,001 to ₹8,00,000" },
+            { "min": 800000, "max": 1200000, "rate": 0.10, "label": "₹8,00,001 to ₹12,00,000" },
+            { "min": 1200000, "max": 1600000, "rate": 0.15, "label": "₹12,00,001 to ₹16,00,000" },
+            { "min": 1600000, "max": 2000000, "rate": 0.20, "label": "₹16,00,001 to ₹20,00,000" },
+            { "min": 2000000, "max": 2400000, "rate": 0.25, "label": "₹20,00,001 to ₹24,00,000" },
+            { "min": 2400000, "max": null, "rate": 0.30, "label": "Above ₹24,00,000" }
+          ],
+          "surcharge": [
+            { "min": 5000000, "max": 10000000, "rate": 0.10 },
+            { "min": 10000000, "max": 20000000, "rate": 0.15 },
+            { "min": 20000000, "max": null, "rate": 0.25 }
+          ]
+        },
+        "oldRegime": {
+          "standardDeduction": 50000,
+          "rebate87A": {
+            "applicableToResidentsOnly": true,
+            "incomeThreshold": 500000,
+            "maxRebate": 12500,
+            "hasMarginalRelief": false,
+            "excludesSection112A": true
+          },
+          "slabs": {
+            "general": [
+              { "min": 0, "max": 250000, "rate": 0, "label": "Up to ₹2,50,000" },
+              { "min": 250000, "max": 500000, "rate": 0.05, "label": "₹2,50,001 to ₹5,00,000" },
+              { "min": 500000, "max": 1000000, "rate": 0.20, "label": "₹5,00,001 to ₹10,00,000" },
+              { "min": 1000000, "max": null, "rate": 0.30, "label": "Above ₹10,00,000" }
+            ],
+            "seniorCitizen": [
+              { "min": 0, "max": 300000, "rate": 0, "label": "Up to ₹3,00,000" },
+              { "min": 300000, "max": 500000, "rate": 0.05, "label": "₹3,00,001 to ₹5,00,000" },
+              { "min": 500000, "max": 1000000, "rate": 0.20, "label": "₹5,00,001 to ₹10,00,000" },
+              { "min": 1000000, "max": null, "rate": 0.30, "label": "Above ₹10,00,000" }
+            ],
+            "superSeniorCitizen": [
+              { "min": 0, "max": 500000, "rate": 0, "label": "Up to ₹5,00,000" },
+              { "min": 500000, "max": 1000000, "rate": 0.20, "label": "₹5,00,001 to ₹10,00,000" },
+              { "min": 1000000, "max": null, "rate": 0.30, "label": "Above ₹10,00,000" }
+            ]
+          },
+          "surcharge": [
+            { "min": 5000000, "max": 10000000, "rate": 0.10 },
+            { "min": 10000000, "max": 20000000, "rate": 0.15 },
+            { "min": 20000000, "max": 50000000, "rate": 0.25 },
+            { "min": 50000000, "max": null, "rate": 0.37 }
+          ]
+        }
+      },
+      "capitalGains": {
+        "stcg111A": { "rate": 0.20, "surchargeCap": 0.15, "label": "STCG Sec 111A (20%)" },
+        "ltcg112A": { "rate": 0.125, "exemptionLimit": 125000, "surchargeCap": 0.15, "label": "LTCG Sec 112A (12.5% > 1.25L)" },
+        "ltcg112": { "rate": 0.125, "surchargeCap": 0.15, "label": "Other LTCG Sec 112 (12.5%)" }
+      },
+      "entities": {
+        "domesticCompany": {
+          "options": [
+            { "id": "standard_30", "rate": 0.30, "label": "Normal Rate (30%)" },
+            { "id": "turnover_le_400cr_25", "rate": 0.25, "label": "Turnover <= 400Cr (25%)" },
+            { "id": "sec_115baa_22", "rate": 0.22, "surchargeFlat": 0.10, "label": "Sec 115BAA (22%)" }
+          ],
+          "surcharge": [
+            { "min": 10000000, "max": 100000000, "rate": 0.07 },
+            { "min": 100000000, "max": null, "rate": 0.12 }
+          ]
+        },
+        "foreignCompany": {
+          "rate": 0.35,
+          "surcharge": [
+            { "min": 10000000, "max": 100000000, "rate": 0.02 },
+            { "min": 100000000, "max": null, "rate": 0.05 }
+          ]
+        },
+        "firmLLP": {
+          "rate": 0.30,
+          "surcharge": [
+            { "min": 10000000, "max": null, "rate": 0.12 }
+          ]
+        },
+        "cooperativeSociety": {
+          "regularSlabs": [
+            { "min": 0, "max": 10000, "rate": 0.10 },
+            { "min": 10000, "max": 20000, "rate": 0.20 },
+            { "min": 20000, "max": null, "rate": 0.30 }
+          ],
+          "concessional": {
+            "sec115bad": { "rate": 0.22, "surchargeFlat": 0.10 }
+          },
+          "surcharge": [
+            { "min": 10000000, "max": 100000000, "rate": 0.07 },
+            { "min": 100000000, "max": null, "rate": 0.12 }
+          ]
+        },
+        "localAuthority": {
+          "rate": 0.30,
+          "surcharge": [
+            { "min": 10000000, "max": null, "rate": 0.12 }
+          ]
+        }
+      }
+    },
+    "2024-2025": {
+      "financialYear": "2024-2025",
+      "assessmentYear": "2025-2026",
+      "cess": 0.04,
+      "individual": {
+        "newRegime": {
+          "standardDeduction": 75000,
+          "rebate87A": {
+            "applicableToResidentsOnly": true,
+            "incomeThreshold": 700000,
+            "maxRebate": 25000,
+            "hasMarginalRelief": true,
+            "excludesSection112A": true
+          },
+          "slabs": [
+            { "min": 0, "max": 300000, "rate": 0, "label": "Up to ₹3,00,000" },
+            { "min": 300000, "max": 700000, "rate": 0.05, "label": "₹3,00,001 to ₹7,00,000" },
+            { "min": 700000, "max": 1000000, "rate": 0.10, "label": "₹7,00,001 to ₹10,00,000" },
+            { "min": 1000000, "max": 1200000, "rate": 0.15, "label": "₹10,00,001 to ₹12,00,000" },
+            { "min": 1200000, "max": 1500000, "rate": 0.20, "label": "₹12,00,001 to ₹15,00,000" },
+            { "min": 1500000, "max": null, "rate": 0.30, "label": "Above ₹15,00,000" }
+          ],
+          "surcharge": [
+            { "min": 5000000, "max": 10000000, "rate": 0.10 },
+            { "min": 10000000, "max": 20000000, "rate": 0.15 },
+            { "min": 20000000, "max": null, "rate": 0.25 }
+          ]
+        },
+        "oldRegime": {
+          "standardDeduction": 50000,
+          "rebate87A": {
+            "applicableToResidentsOnly": true,
+            "incomeThreshold": 500000,
+            "maxRebate": 12500,
+            "hasMarginalRelief": false,
+            "excludesSection112A": true
+          },
+          "slabs": {
+            "general": [
+              { "min": 0, "max": 250000, "rate": 0, "label": "Up to ₹2,50,000" },
+              { "min": 250000, "max": 500000, "rate": 0.05, "label": "₹2,50,001 to ₹5,00,000" },
+              { "min": 500000, "max": 1000000, "rate": 0.20, "label": "₹5,00,001 to ₹10,00,000" },
+              { "min": 1000000, "max": null, "rate": 0.30, "label": "Above ₹10,00,000" }
+            ],
+            "seniorCitizen": [
+              { "min": 0, "max": 300000, "rate": 0, "label": "Up to ₹3,00,000" },
+              { "min": 300000, "max": 500000, "rate": 0.05, "label": "₹3,00,001 to ₹5,00,000" },
+              { "min": 500000, "max": 1000000, "rate": 0.20, "label": "₹5,00,001 to ₹10,00,000" },
+              { "min": 1000000, "max": null, "rate": 0.30, "label": "Above ₹10,00,000" }
+            ],
+            "superSeniorCitizen": [
+              { "min": 0, "max": 500000, "rate": 0, "label": "Up to ₹5,00,000" },
+              { "min": 500000, "max": 1000000, "rate": 0.20, "label": "₹5,00,001 to ₹10,00,000" },
+              { "min": 1000000, "max": null, "rate": 0.30, "label": "Above ₹10,00,000" }
+            ]
+          },
+          "surcharge": [
+            { "min": 5000000, "max": 10000000, "rate": 0.10 },
+            { "min": 10000000, "max": 20000000, "rate": 0.15 },
+            { "min": 20000000, "max": 50000000, "rate": 0.25 },
+            { "min": 50000000, "max": null, "rate": 0.37 }
+          ]
+        }
+      },
+      "capitalGains": {
+        "stcg111A": { "rate": 0.20, "surchargeCap": 0.15, "label": "STCG Sec 111A (20%)" },
+        "ltcg112A": { "rate": 0.125, "exemptionLimit": 125000, "surchargeCap": 0.15, "label": "LTCG Sec 112A (12.5% > 1.25L)" },
+        "ltcg112": { "rate": 0.125, "surchargeCap": 0.15, "label": "Other LTCG Sec 112 (12.5%)" }
+      },
+      "entities": {
+        "domesticCompany": {
+          "options": [
+            { "id": "standard_30", "rate": 0.30, "label": "Normal Rate (30%)" },
+            { "id": "turnover_le_400cr_25", "rate": 0.25, "label": "Turnover <= 400Cr (25%)" },
+            { "id": "sec_115baa_22", "rate": 0.22, "surchargeFlat": 0.10, "label": "Sec 115BAA (22%)" }
+          ],
+          "surcharge": [
+            { "min": 10000000, "max": 100000000, "rate": 0.07 },
+            { "min": 100000000, "max": null, "rate": 0.12 }
+          ]
+        },
+        "foreignCompany": {
+          "rate": 0.35,
+          "surcharge": [
+            { "min": 10000000, "max": 100000000, "rate": 0.02 },
+            { "min": 100000000, "max": null, "rate": 0.05 }
+          ]
+        },
+        "firmLLP": {
+          "rate": 0.30,
+          "surcharge": [
+            { "min": 10000000, "max": null, "rate": 0.12 }
+          ]
+        },
+        "cooperativeSociety": {
+          "regularSlabs": [
+            { "min": 0, "max": 10000, "rate": 0.10 },
+            { "min": 10000, "max": 20000, "rate": 0.20 },
+            { "min": 20000, "max": null, "rate": 0.30 }
+          ],
+          "concessional": {
+            "sec115bad": { "rate": 0.22, "surchargeFlat": 0.10 }
+          },
+          "surcharge": [
+            { "min": 10000000, "max": 100000000, "rate": 0.07 },
+            { "min": 100000000, "max": null, "rate": 0.12 }
+          ]
+        },
+        "localAuthority": {
+          "rate": 0.30,
+          "surcharge": [
+            { "min": 10000000, "max": null, "rate": 0.12 }
+          ]
+        }
+      }
+    },
+    "2023-2024": {
+      "financialYear": "2023-2024",
+      "assessmentYear": "2024-2025",
+      "cess": 0.04,
+      "individual": {
+        "newRegime": {
+          "standardDeduction": 50000,
+          "rebate87A": {
+            "applicableToResidentsOnly": true,
+            "incomeThreshold": 700000,
+            "maxRebate": 25000,
+            "hasMarginalRelief": true,
+            "excludesSection112A": true
+          },
+          "slabs": [
+            { "min": 0, "max": 300000, "rate": 0, "label": "Up to ₹3,00,000" },
+            { "min": 300000, "max": 600000, "rate": 0.05, "label": "₹3,00,001 to ₹6,00,000" },
+            { "min": 600000, "max": 900000, "rate": 0.10, "label": "₹6,00,001 to ₹9,00,000" },
+            { "min": 900000, "max": 1200000, "rate": 0.15, "label": "₹9,00,001 to ₹12,00,000" },
+            { "min": 1200000, "max": 1500000, "rate": 0.20, "label": "₹12,00,001 to ₹15,00,000" },
+            { "min": 1500000, "max": null, "rate": 0.30, "label": "Above ₹15,00,000" }
+          ],
+          "surcharge": [
+            { "min": 5000000, "max": 10000000, "rate": 0.10 },
+            { "min": 10000000, "max": 20000000, "rate": 0.15 },
+            { "min": 20000000, "max": null, "rate": 0.25 }
+          ]
+        },
+        "oldRegime": {
+          "standardDeduction": 50000,
+          "rebate87A": {
+            "applicableToResidentsOnly": true,
+            "incomeThreshold": 500000,
+            "maxRebate": 12500,
+            "hasMarginalRelief": false,
+            "excludesSection112A": true
+          },
+          "slabs": {
+            "general": [
+              { "min": 0, "max": 250000, "rate": 0, "label": "Up to ₹2,50,000" },
+              { "min": 250000, "max": 500000, "rate": 0.05, "label": "₹2,50,001 to ₹5,00,000" },
+              { "min": 500000, "max": 1000000, "rate": 0.20, "label": "₹5,00,001 to ₹10,00,000" },
+              { "min": 1000000, "max": null, "rate": 0.30, "label": "Above ₹10,00,000" }
+            ],
+            "seniorCitizen": [
+              { "min": 0, "max": 300000, "rate": 0, "label": "Up to ₹3,00,000" },
+              { "min": 300000, "max": 500000, "rate": 0.05, "label": "₹3,00,001 to ₹5,00,000" },
+              { "min": 500000, "max": 1000000, "rate": 0.20, "label": "₹5,00,001 to ₹10,00,000" },
+              { "min": 1000000, "max": null, "rate": 0.30, "label": "Above ₹10,00,000" }
+            ],
+            "superSeniorCitizen": [
+              { "min": 0, "max": 500000, "rate": 0, "label": "Up to ₹5,00,000" },
+              { "min": 500000, "max": 1000000, "rate": 0.20, "label": "₹5,00,001 to ₹10,00,000" },
+              { "min": 1000000, "max": null, "rate": 0.30, "label": "Above ₹10,00,000" }
+            ]
+          },
+          "surcharge": [
+            { "min": 5000000, "max": 10000000, "rate": 0.10 },
+            { "min": 10000000, "max": 20000000, "rate": 0.15 },
+            { "min": 20000000, "max": 50000000, "rate": 0.25 },
+            { "min": 50000000, "max": null, "rate": 0.37 }
+          ]
+        }
+      },
+      "capitalGains": {
+        "stcg111A": { "rate": 0.15, "surchargeCap": 0.15, "label": "STCG Sec 111A (15%)" },
+        "ltcg112A": { "rate": 0.10, "exemptionLimit": 100000, "surchargeCap": 0.15, "label": "LTCG Sec 112A (10% > 1L)" },
+        "ltcg112": { "rate": 0.20, "surchargeCap": 0.15, "label": "Other LTCG Sec 112 (20% with indexation)" }
+      },
+      "entities": {
+        "domesticCompany": {
+          "options": [
+            { "id": "standard_30", "rate": 0.30, "label": "Normal Rate (30%)" },
+            { "id": "turnover_le_400cr_25", "rate": 0.25, "label": "Turnover <= 400Cr (25%)" },
+            { "id": "sec_115baa_22", "rate": 0.22, "surchargeFlat": 0.10, "label": "Sec 115BAA (22%)" }
+          ],
+          "surcharge": [
+            { "min": 10000000, "max": 100000000, "rate": 0.07 },
+            { "min": 100000000, "max": null, "rate": 0.12 }
+          ]
+        },
+        "foreignCompany": {
+          "rate": 0.40,
+          "surcharge": [
+            { "min": 10000000, "max": 100000000, "rate": 0.02 },
+            { "min": 100000000, "max": null, "rate": 0.05 }
+          ]
+        },
+        "firmLLP": {
+          "rate": 0.30,
+          "surcharge": [
+            { "min": 10000000, "max": null, "rate": 0.12 }
+          ]
+        },
+        "cooperativeSociety": {
+          "regularSlabs": [
+            { "min": 0, "max": 10000, "rate": 0.10 },
+            { "min": 10000, "max": 20000, "rate": 0.20 },
+            { "min": 20000, "max": null, "rate": 0.30 }
+          ],
+          "concessional": {
+            "sec115bad": { "rate": 0.22, "surchargeFlat": 0.10 }
+          },
+          "surcharge": [
+            { "min": 10000000, "max": 100000000, "rate": 0.07 },
+            { "min": 100000000, "max": null, "rate": 0.12 }
+          ]
+        },
+        "localAuthority": {
+          "rate": 0.30,
+          "surcharge": [
+            { "min": 10000000, "max": null, "rate": 0.12 }
+          ]
+        }
+      }
+    }
+  },
+  "planningCatalog": {
+    "individual": [
+      {
+        "id": "sec80C",
+        "title": "Section 80C Tax-Saving Investments",
+        "section": "Section 80C",
+        "regime": "Old Regime Only",
+        "maxLimit": 150000,
+        "description": "Invest in EPF, PPF, ELSS Mutual Funds, Life Insurance, SSY, or National Savings Certificates (NSC).",
+        "eligibility": "Resident and Non-Resident Individuals",
+        "lockIn": "ELSS: 3 years, PPF: 15 years, NSC: 5 years, Tax FD: 5 years",
+        "action": "Allocate up to ₹1,50,000 across qualifying instruments before 31st March."
+      },
+      {
+        "id": "sec80CCD1B",
+        "title": "National Pension System (NPS) Voluntary Contribution",
+        "section": "Section 80CCD(1B)",
+        "regime": "Old Regime Only",
+        "maxLimit": 50000,
+        "description": "Additional exclusive deduction of up to ₹50,000 over and above the ₹1.5L limit of Section 80C.",
+        "eligibility": "Individuals aged 18 to 70 subscribing to Tier-1 NPS",
+        "lockIn": "Locked in until age 60 (partial withdrawals allowed under special circumstances)",
+        "action": "Contribute to NPS Tier-1 account to claim extra ₹50,000 tax deduction."
+      },
+      {
+        "id": "sec80CCD2",
+        "title": "Employer NPS Contribution (Dual Regime Benefit)",
+        "section": "Section 80CCD(2)",
+        "regime": "Both Old & New Regimes",
+        "maxLimitPercentage": 14,
+        "description": "Employer contribution to employee NPS account up to 14% of Basic + DA is fully tax deductible under BOTH regimes.",
+        "eligibility": "Salaried Employees in Public/Private Sector",
+        "lockIn": "NPS retirement norms",
+        "action": "Restructure CTC with your employer to route up to 14% of Basic Salary directly into NPS."
+      },
+      {
+        "id": "sec80D",
+        "title": "Health Insurance & Preventive Health Check-up",
+        "section": "Section 80D",
+        "regime": "Old Regime Only",
+        "maxLimit": 100000,
+        "description": "Deduction for medical insurance premium: ₹25,000 for self/family (₹50,000 if senior citizen) + ₹25,000/₹50,000 for parents. Includes ₹5,000 preventive health check-up.",
+        "eligibility": "Individuals paying health insurance premiums for self, spouse, children, or parents via non-cash modes",
+        "lockIn": "Annual policy period",
+        "action": "Obtain comprehensive health coverage and maintain premium payment receipts."
+      },
+      {
+        "id": "sec24b",
+        "title": "Home Loan Interest (Self-Occupied Property)",
+        "section": "Section 24(b)",
+        "regime": "Old Regime Only",
+        "maxLimit": 200000,
+        "description": "Interest paid on home loan borrowed for purchase or construction of self-occupied residential property up to ₹2,00,000.",
+        "eligibility": "Borrower/co-borrower of housing loan possessing certificate from financial institution",
+        "lockIn": "Property ownership",
+        "action": "Collect interest certificate from lending bank and claim interest up to ₹2,00,000 under Old Regime."
+      },
+      {
+        "id": "sec80E",
+        "title": "Higher Education Loan Interest",
+        "section": "Section 80E",
+        "regime": "Old Regime Only",
+        "maxLimit": null,
+        "description": "Interest paid on loan taken for higher education of self, spouse, or children without any upper monetary ceiling for up to 8 assessment years.",
+        "eligibility": "Individuals paying interest on education loan from scheduled bank/financial institution",
+        "lockIn": "Maximum 8 consecutive assessment years",
+        "action": "Obtain interest certificate from lending bank and claim 100% of interest paid."
+      },
+      {
+        "id": "sec80TTA_TTB",
+        "title": "Savings & Deposit Interest Deduction",
+        "section": "Section 80TTA / 80TTB",
+        "regime": "Old Regime Only",
+        "maxLimit": 50000,
+        "description": "Section 80TTA allows up to ₹10,000 for savings account interest (non-seniors). Section 80TTB allows up to ₹50,000 for senior citizens on all bank/post office deposits.",
+        "eligibility": "Resident Individuals (80TTB for age 60+)",
+        "lockIn": "None",
+        "action": "Ensure deposit interest within threshold is claimed under Chapter VI-A in Old Regime."
+      }
+    ],
+    "huf": [
+      {
+        "id": "huf_80c",
+        "title": "HUF Section 80C Deductions",
+        "section": "Section 80C",
+        "regime": "Old Regime Only",
+        "maxLimit": 150000,
+        "description": "HUF can invest up to ₹1,50,000 in PPF, ELSS, insurance on members' lives, etc., reducing taxable income.",
+        "eligibility": "Hindu Undivided Family",
+        "lockIn": "Product specific",
+        "action": "Invest HUF surplus funds into qualifying instruments in the name of the Karta or coparceners."
+      },
+      {
+        "id": "huf_80d",
+        "title": "Health Insurance for Family Members",
+        "section": "Section 80D",
+        "regime": "Old Regime Only",
+        "maxLimit": 50000,
+        "description": "Medical insurance premiums paid on the health of any member of the HUF.",
+        "eligibility": "HUF paying via non-cash mode",
+        "lockIn": "Annual policy",
+        "action": "Pay health premiums for family members from HUF bank account."
+      },
+      {
+        "id": "huf_24b",
+        "title": "Housing Loan Interest for HUF Property",
+        "section": "Section 24(b)",
+        "regime": "Old Regime Only",
+        "maxLimit": 200000,
+        "description": "Interest paid on loan taken for acquisition/construction of HUF-owned residential house property.",
+        "eligibility": "HUF holding title and borrower agreement",
+        "lockIn": "Property ownership",
+        "action": "Claim up to ₹2,00,000 interest deduction against HUF house property income."
+      }
+    ],
+    "domestic_company": [
+      {
+        "id": "comp_115baa",
+        "title": "Opt for Concessional 22% Corporate Tax (Section 115BAA)",
+        "section": "Section 115BAA",
+        "regime": "Concessional Corporate Regime",
+        "rate": 0.22,
+        "description": "Domestic companies can elect 22% basic tax rate (effective 25.168% with 10% surcharge and 4% cess). Minimum Alternate Tax (MAT) does NOT apply.",
+        "eligibility": "All domestic companies that forgo specified Chapter VI-A deductions (except 80JJAA/80M) and additional depreciation",
+        "lockIn": "Irrevocable once exercised",
+        "action": "File Form 10-IC on or before the due date of filing return under Section 139(1)."
+      },
+      {
+        "id": "comp_80jjaa",
+        "title": "Employment Generation Deduction (Section 80JJAA)",
+        "section": "Section 80JJAA",
+        "regime": "Allowed in both normal & 115BAA regimes",
+        "maxLimit": null,
+        "description": "Deduction of 30% of additional employee cost incurred for 3 consecutive assessment years for new regular employees.",
+        "eligibility": "Assessees liable to tax audit hiring employees with monthly emoluments <= ₹25,000 for at least 240 days in the year",
+        "lockIn": "3 consecutive years",
+        "action": "Maintain Form 10DA audit report certifying additional employee costs."
+      },
+      {
+        "id": "comp_advance_tax",
+        "title": "Advance Tax Compliance & Interest Mitigation",
+        "section": "Section 208 / 234B / 234C",
+        "regime": "Statutory Compliance",
+        "description": "Ensure installment payments: 15% by 15 June, 45% by 15 Sept, 75% by 15 Dec, and 100% by 15 March to avoid mandatory interest under Sections 234B and 234C.",
+        "eligibility": "Companies with estimated tax liability of ₹10,000 or more",
+        "lockIn": "Quarterly compliance",
+        "action": "Review quarterly projected profit and pay advance tax challans before quarterly due dates."
+      }
+    ],
+    "foreign_company": [
+      {
+        "id": "fc_rate_reduction",
+        "title": "Reduced 35% Corporate Tax Rate Utilization",
+        "section": "Finance (No. 2) Act 2024",
+        "regime": "Statutory Rate",
+        "description": "Foreign company tax rate was reduced from 40% to 35% to foster parity and encourage foreign direct investment in India.",
+        "eligibility": "Foreign corporations operating Indian branches or project offices",
+        "lockIn": "Annual assessment",
+        "action": "Compute tax liability using the updated 35% statutory rate."
+      },
+      {
+        "id": "fc_dtaa",
+        "title": "Double Tax Avoidance Agreement (DTAA) Relief",
+        "section": "Section 90 / 90A",
+        "regime": "Treaty Provisions",
+        "description": "Avail beneficial treaty rates for royalties, fees for technical services (FTS), and capital gains if more favorable than domestic statutory rates.",
+        "eligibility": "Foreign companies with valid Tax Residency Certificate (TRC) and Form 10F",
+        "lockIn": "Annual filing",
+        "action": "Ensure valid TRC and electronically filed Form 10F are submitted prior to receiving Indian payments."
+      }
+    ],
+    "firm_llp": [
+      {
+        "id": "firm_remuneration",
+        "title": "Partner Remuneration Optimization (Section 40(b))",
+        "section": "Section 40(b)",
+        "regime": "Statutory Deduction",
+        "description": "Deduct partner remuneration up to allowable statutory limits against book profit: on first ₹3L book profit: ₹1.5L or 90%; on balance: 60%. (Note: Finance Act 2024 increased initial limit to ₹3L or 90% of book profit).",
+        "eligibility": "Firms and LLPs with written partnership deed authorizing remuneration to working partners",
+        "lockIn": "Governed by partnership agreement",
+        "action": "Ensure partnership deed explicitly authorizes remuneration and computes book profits accurately."
+      },
+      {
+        "id": "firm_interest",
+        "title": "Partner Capital Interest Optimization",
+        "section": "Section 40(b)(iv)",
+        "regime": "Statutory Deduction",
+        "maxLimitPercentage": 12,
+        "description": "Pay simple interest up to 12% per annum on capital contributed by partners, deductible from firm profits.",
+        "eligibility": "Authorized in partnership agreement",
+        "lockIn": "Annual computation",
+        "action": "Credit interest up to 12% to partner capital accounts before finalizing firm financial statements."
+      }
+    ],
+    "cooperative_society": [
+      {
+        "id": "coop_115bad",
+        "title": "Concessional 22% Tax Rate (Section 115BAD)",
+        "section": "Section 115BAD",
+        "regime": "Concessional Cooperative Regime",
+        "rate": 0.22,
+        "description": "Resident cooperative societies can opt for flat 22% tax rate + 10% surcharge + 4% cess (effective 25.168%), exempt from Alternate Minimum Tax (AMT).",
+        "eligibility": "Resident cooperative societies",
+        "lockIn": "Irrevocable option",
+        "action": "File Form 10-IF on or before due date of return."
+      },
+      {
+        "id": "coop_80p",
+        "title": "Section 80P Deductions for Agricultural & Credit Societies",
+        "section": "Section 80P",
+        "regime": "Regular Regime Only",
+        "description": "100% deduction of profits attributable to carrying on the business of banking/credit facility to members, cottage industries, or marketing of agricultural produce.",
+        "eligibility": "Primary agricultural credit societies and specified cooperative societies",
+        "lockIn": "Regular regime condition",
+        "action": "Evaluate whether 80P deductions yield lower tax under Regular Slabs than Section 115BAD."
+      }
+    ],
+    "aop_boi_ajp": [
+      {
+        "id": "aop_regime_choice",
+        "title": "Evaluate Section 115BAC New Regime",
+        "section": "Section 115BAC(1A)",
+        "regime": "New Regime (Default)",
+        "description": "AOP/BOI/AJP are covered under Section 115BAC with progressive slabs (0-4L Nil, 4-8L 5%, etc.). Assess if lower slab rates outperform Chapter VI-A deductions.",
+        "eligibility": "AOP, BOI, and AJP entities",
+        "lockIn": "Annual or business regime restriction",
+        "action": "Compare Old Regime vs New Regime using the side-by-side comparison engine."
+      }
+    ],
+    "local_authority": [
+      {
+        "id": "local_auth_exempt",
+        "title": "Section 10(20) Income Exemption",
+        "section": "Section 10(20)",
+        "regime": "Statutory Exemption",
+        "description": "Income of a local authority derived from supply of commodities/services within its jurisdictional area is fully exempt under Section 10(20).",
+        "eligibility": "Panchayats, Municipalities, Municipal Committees, Cantonment Boards",
+        "lockIn": "Statutory provision",
+        "action": "Ensure qualifying municipal service receipts are excluded from taxable income."
+      }
+    ]
+  }
+}

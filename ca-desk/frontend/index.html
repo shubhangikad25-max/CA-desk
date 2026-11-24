@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CA Desk — Chartered Accountant Office Management Platform</title>
+    <!-- Modern Typography: Inter & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/taxwise.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'><rect width='24' height='24' rx='6'/><text x='50%' y='68%' font-size='13' font-family='sans-serif' font-weight='bold' fill='white' text-anchor='middle'>CA</text></svg>">
+</head>
+<body>
+    <div id="app">
+        <!-- Dark Navy Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header" style="display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+                <div class="brand-badge" style="width: 34px; height: 34px; background: #2563eb; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #ffffff !important; font-weight: 700; font-size: 0.95rem; flex-shrink: 0;">CA</div>
+                <div class="brand-text" style="display: flex; flex-direction: column; justify-content: center; line-height: 1.25;">
+                    <span class="brand-title" style="color: #ffffff !important; font-weight: 700; font-size: 1.05rem; letter-spacing: -0.01em; display: block;">CA Desk</span>
+                    <span class="brand-subtitle" style="color: #94a3b8 !important; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; display: block; margin-top: 2px;">OFFICE SUITE</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Core Management</div>
+                
+                <a href="#dashboard" class="nav-item active" data-route="dashboard">
+                    <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="#clients" class="nav-item" data-route="clients">
+                    <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Clients</span>
+                </a>
+
+                <a href="#taxwise" class="nav-item" data-route="taxwise">
+                    <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+                    <span>TaxWise Calculator</span>
+                    <span class="nav-badge" style="background:#2563eb;">INTEGRATED</span>
+                </a>
+
+                <div class="nav-section-title">Operations</div>
+
+                <a href="#tasks" class="nav-item" data-route="tasks">
+                    <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    <span>Tasks & Review</span>
+                </a>
+
+                <a href="#documents" class="nav-item" data-route="documents">
+                    <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    <span>Documents</span>
+                </a>
+
+                <a href="#compliance" class="nav-item" data-route="compliance">
+                    <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>Compliance</span>
+                </a>
+
+                <a href="#billing" class="nav-item" data-route="billing">
+                    <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <span>Billing & Invoices</span>
+                </a>
+
+                <div class="nav-section-title">Office & Analytics</div>
+
+                <a href="#alerts" class="nav-item" data-route="alerts">
+                    <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    <span>Alerts</span>
+                </a>
+
+                <a href="#reports" class="nav-item" data-route="reports">
+                    <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    <span>Reports</span>
+                </a>
+
+                <a href="#settings" class="nav-item" data-route="settings">
+                    <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <span>Staff & Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-avatar" id="sidebar-user-avatar">RS</div>
+                <div class="user-info">
+                    <div class="user-name" id="sidebar-user-name">CA Rajesh Sharma</div>
+                    <div class="user-role" id="sidebar-user-role">Managing Partner (FCA)</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- White Topbar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <div class="global-search" id="global-search-container">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                        <input type="text" id="global-search-input" placeholder="Search clients, PAN, tasks, or calculations..." autocomplete="off" spellcheck="false">
+                        <button type="button" class="search-clear-btn" id="global-search-clear" title="Clear search" style="display:none;">&times;</button>
+                        <div class="search-kbd-hint" id="global-search-kbd" title="Press Enter to search">
+                            <kbd>↵ Enter</kbd>
+                        </div>
+                        <div class="search-results-dropdown" id="global-search-dropdown" style="display:none;"></div>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">ACTIVE STAFF:</span>
+                        <select class="role-switcher-select" id="role-switcher-select" title="Switch active staff session">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+
+                    <a href="#alerts" class="action-icon-btn" title="Office Alerts & Reminders">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        <span class="badge-dot" id="topbar-alert-dot" style="display:none;"></span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Dynamic Workspace Content -->
+            <main class="workspace-content" id="workspace-content">
+                <!-- Views loaded by Router -->
+            </main>
+        </div>
+    </div>
+
+    <!-- Reusable Modal Dialog -->
+    <div class="modal-overlay" id="app-modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">Dialog</h3>
+                <button class="modal-close" id="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Body content inserted dynamically -->
+            </div>
+            <div class="modal-footer" id="modal-footer">
+                <!-- Footer buttons inserted dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- Application Logic -->
+    <script src="js/api.js"></script>
+    <script src="js/taxwise-core.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
